@@ -22,7 +22,7 @@ while True:
     yc1 = deck.pop(random.randrange(len(deck)))
     yct = [yc, yc1]
     print('your preflop cards: ', [yc, yc1])
-    cc = deck.pop(random.randrange(len(deck)))
+    cc = 'Ah'
     cc1 = deck.pop(random.randrange(len(deck)))
     cct = [cc, cc1]
     pot = 0
@@ -51,14 +51,15 @@ while True:
                 c_chips -= 2 * sb
                 c_move = ''
                 num1 = random.randint(1, 3)
-                if (cc[0] == cc1[0] and num1 == 3) or (cc[0] in ['K', 'Q'] or cc1[0] in ['A', 'K', 'Q']):
+                if (cc[0] == cc1[0] and num1 == 3) or (cc[0] in ['K', 'Q'] or cc1[0] in ['A', 'K', 'Q'])\
+                        and preflop == 'r':
                     c_move = 'call'
                     p_call = p_raise
                     c_chips -= (p_call - sb * 2)
                     pot += p_call
                     print('pot is', pot)
                     break
-                elif (cc[0] == cc1[0] and num1 < 3) or (cc[0] == 'A'):
+                elif (cc[0] == cc1[0] and num1 < 3) or (cc[0] == 'A') and preflop == 'r':
                     c_move = 'raise'
                     c_p_raise = 3 * p_raise
                     c_chips -= (c_p_raise - sb * 2)
@@ -83,14 +84,16 @@ while True:
                 reaction1 = input('raise, call or fold? (r/c/f)')
                 print('raise by', c_p_raise - p_raise)
                 if reaction1 == 'r':
-                    pfrr = int(input('what is your re-raise?'))    # ie how many extra chips in pot
+                    pfrr = int(input('what is your re-raise? (remember x to call + '
+                                     'additional chips)'))    # ie how many extra chips in pot
                     chips -= pfrr
+                    c_chips -= (pfrr - c_p_raise + p_raise)
                     pot += (c_p_raise + pfrr)
                     print('pot is', pot)
                     pass
                 elif reaction1 == 'c':
-                    chips -= c_p_raise
-                    pot += c_p_raise
+                    chips -= (c_p_raise - p_raise)
+                    pot += (c_p_raise - p_raise)
                     print('pot is', pot)
                 elif reaction1 == 'f':
                     preflop = 'f'
