@@ -22,7 +22,7 @@ while True:
     yc1 = deck.pop(random.randrange(len(deck)))
     yct = [yc, yc1]
     print('your preflop cards: ', [yc, yc1])
-    cc = 'Ah'
+    cc = deck.pop(random.randrange(len(deck)))
     cc1 = deck.pop(random.randrange(len(deck)))
     cct = [cc, cc1]
     pot = 0
